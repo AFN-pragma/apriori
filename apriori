@@ -1,0 +1,50 @@
+toy_dataset = [['Skirt', 'Sneakers', 'Scarf', 'Pants', 'Hat'],
+               ['Sunglasses', 'Skirt', 'Sneakers', 'Pants', 'Hat'],
+               ['Dress', 'Sandals', 'Scarf', 'Pants', 'Heels'],
+               ['Dress', 'Necklace', 'Earrings', 'Scarf', 'Hat', 'Heels', 'Hat'],
+               ['Earrings', 'Skirt', 'Skirt', 'Scarf', 'Shirt', 'Pants']
+                ]
+
+import mlxtend
+import pandas as pd
+from mlxtend.preprocessing import TransactionEncoder
+
+te=TransactionEncoder()
+te_ary=te.fit(toy_dataset).transform(toy_dataset)
+df=pd.DataFrame(te_ary, columns=te.columns_)
+df
+
+from mlxtend.frequent_patterns import apriori
+apriori(df, min_support=0.6)
+
+frequent_itemsets=apriori(df, min_support=0.6, use_colnames=True)
+frequent_itemsets
+
+import pandas as pd
+import plotly.express as px
+
+
+data = pd.read_csv("Market_Basket_Optimisation.csv")
+data
+(data.head())
+(data.describe())
+(data.info())
+(data.isnull().sum())
+
+toy_dataset2 = {"FALLOU": ['Skirt', 'Sneakers', 'Scarf', 'Pants', 'Hat'],
+               "BABA": ['Sunglasses', 'Skirt', 'Sneakers', 'Pants', 'Hat'],
+               "COUCOU": ['Dress', 'Sandals', 'Scarf', 'Pants', 'Heels'],
+               "DAOUDA": ['Dress', 'Necklace', 'Earrings', 'Scarf', 'Hat', 'Heels', 'Hat'],
+               "ELFE": ['Earrings', 'Skirt', 'Skirt', 'Scarf', 'Shirt', 'Pants']
+                }
+
+items = []
+for category, items_list in toy_dataset2.items():
+    for item in items_list:
+        items.append((category, item))
+
+df = pd.DataFrame(items, columns=['Name', 'Item'])
+df
+
+fig = px.histogram(df, x="Name")
+fig.show()
