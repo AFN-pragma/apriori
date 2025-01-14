@@ -38,13 +38,23 @@ toy_dataset2 = {"FALLOU": ['Skirt', 'Sneakers', 'Scarf', 'Pants', 'Hat'],
                "ELFE": ['Earrings', 'Skirt', 'Skirt', 'Scarf', 'Shirt', 'Pants']
                 }
 
+import matplotlib.pyplot as plt
 items = []
 for category, items_list in toy_dataset2.items():
     for item in items_list:
         items.append((category, item))
 
-df = pd.DataFrame(items, columns=['Name', 'Item'])
-df
+df = pd.DataFrame(items, columns=['Category', 'Item'])
 
-fig = px.histogram(df, x="Name")
-fig.show()
+# Count the occurrences of each item
+item_counts = df['Item'].value_counts()
+
+# Plotting
+plt.figure(figsize=(10, 6))
+item_counts.plot(kind='bar', color='skyblue')
+plt.title('Item Frequency in Categories')
+plt.xlabel('Items')
+plt.ylabel('Frequency')
+plt.xticks(rotation=45)
+plt.grid(axis='y')
+plt.show()
